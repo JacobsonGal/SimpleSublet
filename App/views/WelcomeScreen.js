@@ -1,19 +1,39 @@
 // rsf
 import React from "react";
-import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Alert,
+  Button,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  TouchableHighlight,
+  ImageBackground,
+  Platform,
+  StatusBar as Status,
+  Dimensions,
+} from "react-native";
+import {
+  useDimensions,
+  useDeviceOrientation,
+} from "@react-native-community/hooks";
+
+import colors from "../config/colors";
+import { StatusBar } from "expo-status-bar";
 
 export default function WelcomeScreen(props) {
   return (
     <ImageBackground
       style={styles.background}
-      source={require("../assets/background.jpg")}
+      source={require("../assets/telaviv.jpg")}
     >
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require("../assets/logo-red.png")} />
-        <Text> Sell what you dont need </Text>
+        <Image style={styles.logo} source={require("../assets/house.png")} />
+        {/* <Text style={styles.text}> Simple Sublet </Text> */}
       </View>
-      <View style={styles.loginButton}></View>
-      <View style={styles.registerButton}></View>
     </ImageBackground>
   );
 }
@@ -21,7 +41,7 @@ export default function WelcomeScreen(props) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
   },
   loginButton: {
@@ -35,12 +55,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#4ecdc4",
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 500,
+    height: 500,
+    color: colors.white,
   },
   logoContainer: {
-    position: "absolute",
-    top: 70,
+    justifyContent: "center",
     alignItems: "center",
+  },
+  text: {
+    color: colors.black,
+    fontFamily: "Cochin",
+    fontSize: 40,
+    fontWeight: "900",
+    bottom: 50,
   },
 });
