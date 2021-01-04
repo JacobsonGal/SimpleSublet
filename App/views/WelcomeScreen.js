@@ -1,43 +1,60 @@
-// rsf
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  Alert,
-  Button,
-  SafeAreaView,
-  TouchableWithoutFeedback,
   TouchableOpacity,
-  TouchableHighlight,
   ImageBackground,
-  Platform,
-  StatusBar as Status,
-  Dimensions,
+  Animated,
 } from "react-native";
-import {
-  useDimensions,
-  useDeviceOrientation,
-} from "@react-native-community/hooks";
-
 import colors from "../config/colors";
-import { StatusBar } from "expo-status-bar";
 
-export default function WelcomeScreen(props) {
+const FadeInView = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 4000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/telaviv.jpg")}
+    <Animated.View // Special animatable View
+      style={{
+        flex: 1,
+        opacity: fadeAnim, // Bind opacity to animated value
+      }}
     >
-      <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require("../assets/house.png")} />
-        {/* <Text style={styles.text}> Simple Sublet </Text> */}
-      </View>
-    </ImageBackground>
+      {props.children}
+    </Animated.View>
+  );
+};
+
+// export default function WelcomeScreen({ navigation }) {
+export default function WelcomeScreen() {
+  return (
+    <FadeInView>
+      <ImageBackground
+        style={styles.background}
+        source={require("../assets/telaviv.jpg")}
+      >
+        <Text style={styles.text}> Simple Sublet </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
+          <View style={styles.logoContainer}>
+            <Image
+              style={styles.logo}
+              source={require("../assets/house.png")}
+            />
+          </View>
+        </TouchableOpacity>
+      </ImageBackground>
+    </FadeInView>
   );
 }
-// rnss
+
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -57,17 +74,17 @@ const styles = StyleSheet.create({
   logo: {
     width: 500,
     height: 500,
-    color: colors.white,
   },
   logoContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
   text: {
-    color: colors.black,
+    color: colors.white,
+    alignItems: "center",
     fontFamily: "Cochin",
     fontSize: 40,
     fontWeight: "900",
-    bottom: 50,
+    top: -20,
   },
 });

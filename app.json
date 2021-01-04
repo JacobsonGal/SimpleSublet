@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "SimpleSublet",
-    "slug": "SimpleSublet",
+    "name": "SimSub",
+    "slug": "SimSub",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/favicon.png",
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
@@ -24,9 +24,9 @@
       }
     },
     "web": {
-      "favicon": "./app/assets/house.png"
+      "favicon": "./app/assets/favicon.png"
     },
-    "description": "Sublet Finder App",
+    "description": "Sublet Finder Platform",
     "githubUrl": "https://github.com/JacobsonGal/SimpleSublet.git"
   }
 }
