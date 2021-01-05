@@ -1,14 +1,14 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import colors from "../config/colors";
+import { Image, SafeAreaView, StyleSheet, View } from "react-native";
+import colors from "../../config/colors";
 
-export default function Dashboard(props) {
+export default function Dashboard({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
         resizeMode="contain"
         style={styles.image}
-        source={require("../assets/chair.jpg")}
+        source={require("../../assets/chair.jpg")}
       />
     </View>
   );

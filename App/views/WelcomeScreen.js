@@ -7,25 +7,33 @@ import {
   TouchableOpacity,
   ImageBackground,
   Animated,
+  Easing,
 } from "react-native";
 import colors from "../config/colors";
 
 const FadeInView = (props) => {
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
-
   useEffect(() => {
-    Animated.timing(fadeAnim, {
+    Animated.timing(props.fadeAnim, {
       toValue: 1,
       duration: 4000,
+      easing: Easing.ease,
       useNativeDriver: true,
-    }).start();
-  }, [fadeAnim]);
+    }).start(() => {
+      Animated.timing(props.fadeAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }).start(() => {
+        props.navigation.navigate("Login");
+      });
+    });
+  }, [props.fadeAnim]);
 
   return (
     <Animated.View // Special animatable View
       style={{
         flex: 1,
-        opacity: fadeAnim, // Bind opacity to animated value
+        opacity: props.fadeAnim, // Bind opacity to animated value
       }}
     >
       {props.children}
@@ -33,23 +41,64 @@ const FadeInView = (props) => {
   );
 };
 
-// export default function WelcomeScreen({ navigation }) {
-export default function WelcomeScreen() {
+export default function WelcomeScreen({ navigation }) {
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
   return (
-    <FadeInView>
+    <FadeInView navigation={navigation} fadeAnim={fadeAnim}>
       <ImageBackground
         style={styles.background}
         source={require("../assets/telaviv.jpg")}
       >
-        <Text style={styles.text}> Simple Sublet </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
-          <View style={styles.logoContainer}>
-            <Image
-              style={styles.logo}
-              source={require("../assets/house.png")}
-            />
-          </View>
-        </TouchableOpacity>
+        {/* <Text style={styles.text}> Simple Sublet </Text> */}
+        {/* <Animated.text
+          value="Simple Sublet"
+          text="text"
+          style={[
+            styles.text,
+            {
+              transform: [
+                {
+                  scaleX: fadeAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1, 2],
+                  }),
+                },
+                {
+                  scaleY: fadeAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1, 2],
+                  }),
+                },
+              ],
+            },
+          ]}
+        /> */}
+        <View style={styles.logoContainer}>
+          {/* <Image style={styles.logo} source={require("../assets/house.png")} /> */}
+          <Animated.Image
+            source={require("../assets/house.png")}
+            style={[
+              styles.logo,
+              {
+                transform: [
+                  {
+                    scaleX: fadeAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [1, 1.5],
+                    }),
+                  },
+                  {
+                    scaleY: fadeAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [1, 1.5],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          />
+        </View>
       </ImageBackground>
     </FadeInView>
   );

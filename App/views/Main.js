@@ -2,8 +2,10 @@ import React, { useRef, useEffect } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./Home";
-import Dashboard from "./Dashboard";
+import Home from "./NavBar/Home";
+import Dashboard from "./NavBar/Dashboard";
+import Login from "./Login";
+import WelcomeScreen from "./WelcomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -12,20 +14,20 @@ export default function Main() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="Home"
           component={Home}
-          options={{
-            title: "Home",
-            headerStyle: {
-              backgroundColor: "white",
-            },
-            headerTintColor: "black",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
