@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import MapView, { Marker, Polyline } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions, Platform } from "react-native";
-import GetLocation from "react-native-get-location";
+// import MapView, { Marker, Polyline } from "react-native-maps";
+// import { StyleSheet, Text, View, Dimensions, Platform } from "react-native";
+// import GetLocation from "react-native-get-location";
 
 const mapStyle = [
   {
@@ -91,13 +91,14 @@ export default function Map() {
         <Marker
           title={TelAviv.title}
           description={TelAviv.description}
-          coordinate={GetLocation.Location.location}
+          coordinate={TelAviv}
           // image={require("../../assets/icon.png")}
         />
         {/* <CustomMarker />
         </Marker> */}
         {/* <Polyline coordinates={[TelAviv, Holon]} /> */}
       </MapView>
+      <Text>{location}</Text>
     </View>
   );
 }
