@@ -7,13 +7,16 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  ImageBackground,
 } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
+import Carousel from "react-native-snap-carousel";
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      activeIndex: 0,
       data: [
         {
           id: 1,
@@ -41,8 +44,80 @@ export default class Profile extends Component {
           description: "מאפיינים",
         },
       ],
+      carouselItems: [
+        {
+          id: 1,
+          title: "סאבלט בעיר הגדולה",
+          location: "סלון",
+          image: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg",
+        },
+        {
+          id: 2,
+          title: "סאבלט בעיר הגדולה",
+          location: "מטבח",
+          image: "https://img.mako.co.il/2015/07/01/GGkldd03_i.jpg",
+        },
+        {
+          id: 3,
+          title: "סאבלט בעיר הגדולה",
+          location: "חדר שינה",
+          image: "https://img.mako.co.il/2015/07/01/GGkldd05_i.jpg",
+        },
+        {
+          id: 4,
+          title: "סאבלט בעיר הגדולה",
+          location: "שירותים",
+          image: "https://img.mako.co.il/2015/07/01/GGkldd09_i.jpg",
+        },
+        {
+          id: 5,
+          title: "סאבלט בעיר הגדולה",
+          location: "מרפסת",
+          image: "https://img.mako.co.il/2015/07/01/GGkldd10_i.jpg",
+        },
+        {
+          id: 6,
+          title: "סאבלט בעיר הגדולה",
+          location: "מקלחת",
+          image:
+            "https://q-xx.bstatic.com/xdata/images/hotel/840x460/171170838.jpg?k=61e429dc79a6ca574886d85e577d413adea5d4c9e6cf76dff15b9b7c1c60fcc7&o=",
+        },
+        {
+          id: 7,
+          title: "סאבלט בעיר הגדולה",
+          location: "בריכה",
+          image: "https://img.mako.co.il/2015/07/01/HkkRRe08_c.jpg",
+        },
+        {
+          id: 8,
+          title: "סאבלט בעיר הגדולה",
+          location: "כניסה",
+          image: "https://img.mako.co.il/2015/07/01/GGkldd16_c.jpg",
+        },
+      ],
     };
   }
+
+  _renderItem({ item, index }) {
+    return (
+      <ImageBackground style={styles.header} source={{ uri: item.image }}>
+        <View
+          style={{
+            // backgroundColor: "floralwhite",
+            borderRadius: 15,
+            height: 250,
+            // padding: 50,
+            marginLeft: 25,
+            marginRight: 25,
+          }}
+        >
+          <Text style={{ fontSize: 30 }}>{item.location}</Text>
+          <Text>{item.title}</Text>
+        </View>
+      </ImageBackground>
+    );
+  }
+
   location = {
     title: "Tel-Aviv",
     description: "North",
@@ -53,13 +128,6 @@ export default class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <View style={styles.header}> */}
-        <Image
-          style={styles.header}
-          source={{
-            uri: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg",
-          }}
-        />
         <MapView style={styles.map}>
           <Marker
             title={this.location.title}
@@ -68,6 +136,26 @@ export default class Profile extends Component {
             // image={{ uri: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg" }}
           />
         </MapView>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: 10,
+          }}
+        >
+          <Carousel
+            layout={"default"}
+            ref={(ref) => (this.carousel = ref)}
+            data={this.state.carouselItems}
+            sliderWidth={300}
+            itemWidth={280}
+            renderItem={this._renderItem}
+            onSnapToItem={(index) => this.setState({ activeIndex: index })}
+            autoplay={true}
+            autoplayDelay={1}
+            autoplayInterval={2000}
+          />
+        </View>
 
         <View style={styles.body}>
           <FlatList

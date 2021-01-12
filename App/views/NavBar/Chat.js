@@ -13,20 +13,22 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Message from "../Components/Message";
-import Chats from "../Components/Chats";
+import Chats from "../Components/Massaging/Chats";
 
 const Stack = createStackNavigator();
 
 export default function Chat() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Chats"
-        component={Chats}
-        options={{ headerBackTitleVisible: false, headerLeft: false }}
-      />
-      <Stack.Screen name="Message" component={Message} options={{}} />
-    </Stack.Navigator>
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Chats"
+          component={Chats}
+          options={{ headerBackTitleVisible: false, headerLeft: false }}
+        />
+        <Stack.Screen name="Message" component={Message} options={{}} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

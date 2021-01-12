@@ -19,14 +19,16 @@ const Stack = createStackNavigator();
 
 export default function Chat() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Dashboard"
-        component={Dashboard}
-        options={{ headerBackTitleVisible: false, headerLeft: false }}
-      />
-      <Stack.Screen name="Sublet" component={Sublet} options={{}} />
-    </Stack.Navigator>
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{ headerBackTitleVisible: false, headerLeft: false }}
+        />
+        <Stack.Screen name="Sublet" component={Sublet} options={{}} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

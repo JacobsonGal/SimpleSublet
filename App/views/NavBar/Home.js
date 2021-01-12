@@ -6,9 +6,18 @@ import { BottomNavigation, Text } from "react-native-paper";
 
 import Map from "./Map";
 import Upload from "./Upload";
-import Dashboard from "./Dashboard";
-import Chat from "./Chat";
+// import Dashboard from "./Dashboard";
+// import Chat from "./Chat";
 import User from "./User";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Dashboard from "../Components/Dashboard/Dashboard";
+import Sublet from "../Components/Dashboard/Sublet";
+import Message from "../Components/Massaging/Message";
+import Chats from "../Components/Massaging/Chats";
+
+const Stack = createStackNavigator();
 
 const MapRoute = () => {
   if (Platform.OS === "ios") {
@@ -19,9 +28,42 @@ const MapRoute = () => {
 };
 
 const UploadRoute = () => <Text>Add</Text>;
-const DashboardRoute = () => <Text>Dashboard</Text>;
-const ChatRoute = () => <Text>Chat</Text>;
-const UserRoute = () => <Text>User</Text>;
+const DashboardRoute = () => (
+  <NavigationContainer independent={true}>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{ headerBackTitleVisible: false, headerLeft: false }}
+      />
+      <Stack.Screen name="Sublet" component={Sublet} options={{}} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
+const ChatRoute = () => (
+  <NavigationContainer independent={true}>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Chats"
+        component={Chats}
+        options={{ headerBackTitleVisible: false, headerLeft: false }}
+      />
+      <Stack.Screen name="Message" component={Message} options={{}} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
+const UserRoute = () => (
+  <NavigationContainer independent={true}>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="User"
+        component={User}
+        options={{ headerBackTitleVisible: false, headerLeft: false }}
+      />
+      {/* <Stack.Screen name="Settings" component={Settings} options={{}} /> */}
+    </Stack.Navigator>
+  </NavigationContainer>
+);
 
 export default function Home({ navigation }) {
   const [index, setIndex] = React.useState(0);
@@ -35,11 +77,11 @@ export default function Home({ navigation }) {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    dashboard: Dashboard,
+    dashboard: DashboardRoute,
     map: MapRoute,
     upload: Upload,
-    chat: Chat,
-    user: User,
+    chat: ChatRoute,
+    user: UserRoute,
   });
 
   return (
