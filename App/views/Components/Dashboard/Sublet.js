@@ -6,7 +6,9 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  Dimensions,
 } from "react-native";
+import MapView, { Marker, Polyline } from "react-native-maps";
 
 export default class Profile extends Component {
   constructor(props) {
@@ -17,43 +19,56 @@ export default class Profile extends Component {
           id: 1,
           image:
             "https://img.icons8.com/color/70/000000/administrator-male.png",
-          title: "פרטי משתמש",
-          description: "פרטי משתמש",
+          //   title: "פרטי איש קשר",
+          description: "פרטי איש קשר",
         },
         {
           id: 2,
           image: "https://img.icons8.com/color/70/000000/filled-like.png",
-          title: "מועדפים",
-          description: "מועדפים",
+          //   title: "מועדפים",
+          description: "אזור",
         },
         {
           id: 3,
           image: "https://img.icons8.com/color/70/000000/cottage.png",
-          title: "הסיבלוטים שלי",
-          description: "הסיבלוטים שלי",
+          //   title: "הסיבלוטים שלי",
+          description: "תקופה",
         },
         {
           id: 4,
           image: "https://img.icons8.com/color/70/000000/facebook-like.png",
-          title: "אזורים מועדפים",
-          description: "אזורים מועדפים",
+          //   title: "אזורים מועדפים",
+          description: "מאפיינים",
         },
       ],
     };
   }
+  location = {
+    title: "Tel-Aviv",
+    description: "North",
+    latitude: 32.0853,
+    longitude: 34.781769,
+  };
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Image
-            style={styles.avatar}
-            source={{
-              uri:
-                "http://test4.servernet.rs/assets/pages/media/profile/profile_user.jpg",
-            }}
+        {/* <View style={styles.header}> */}
+        <Image
+          style={styles.header}
+          source={{
+            uri: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg",
+          }}
+        />
+        <MapView style={styles.map}>
+          <Marker
+            title={this.location.title}
+            description={this.location.description}
+            coordinate={this.location}
+            // image={{ uri: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg" }}
           />
-        </View>
+        </MapView>
+
         <View style={styles.body}>
           <FlatList
             style={styles.bodyContent}
@@ -95,35 +110,17 @@ export default class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
-  // header: {
-  //   backgroundColor: "#EE82EE",
-  // },
-  // headerContent: {
-  //   padding: 30,
-  //   alignItems: "center",
-  // },
-  // avatar: {
-  //   width: 130,
-  //   height: 130,
-  //   borderRadius: 63,
-  //   borderWidth: 4,
-  //   borderColor: "#FF6347",
-  //   marginBottom: 10,
-  // },
   header: {
-    backgroundColor: "dodgerblue",
     height: 150,
   },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom: 10,
-    alignSelf: "center",
-    marginTop: 80,
+
+  map: {
+    height: 150,
+    // borderRadius: 30,
+    // margin: 10,
+    // marginHorizontal: 13,
   },
+
   name: {
     fontSize: 22,
     color: "black",
@@ -152,7 +149,7 @@ const styles = StyleSheet.create({
     // padding: 30,
     // marginTop: 50,
     position: "relative",
-    paddingTop: 70,
+    paddingTop: 10,
   },
 
   box: {
@@ -207,60 +204,3 @@ const styles = StyleSheet.create({
     color: "#00BFFF",
   },
 });
-// const styles = StyleSheet.create({
-//   header: {
-//     backgroundColor: "#00BFFF",
-//     height: 200,
-//   },
-//   avatar: {
-//     width: 130,
-//     height: 130,
-//     borderRadius: 63,
-//     borderWidth: 4,
-//     borderColor: "white",
-//     marginBottom: 10,
-//     alignSelf: "center",
-//     position: "absolute",
-//     marginTop: 130,
-//   },
-//   name: {
-//     fontSize: 22,
-//     color: "black",
-//     fontWeight: "600",
-//   },
-//   body: {
-//     marginTop: 40,
-//   },
-//   bodyContent: {
-//     flex: 1,
-//     alignItems: "center",
-//     padding: 30,
-//   },
-//   name: {
-//     fontSize: 28,
-//     color: "#696969",
-//     fontWeight: "600",
-//   },
-//   info: {
-//     fontSize: 16,
-//     color: "#00BFFF",
-//     marginTop: 10,
-//   },
-//   description: {
-//     fontSize: 16,
-//     color: "#696969",
-//     marginTop: 10,
-//     textAlign: "center",
-//   },
-//   buttonContainer: {
-//     marginTop: 10,
-//     height: 45,
-//     flexDirection: "row",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     marginBottom: 20,
-//     width: 250,
-//     borderRadius: 30,
-//     backgroundColor: "#00BFFF",
-//   },
-// });

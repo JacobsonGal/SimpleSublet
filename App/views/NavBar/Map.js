@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import MapView, { Marker, Polyline } from "react-native-maps";
-// import { StyleSheet, Text, View, Dimensions, Platform } from "react-native";
+import MapView, { Marker, Polyline } from "react-native-maps";
+import { StyleSheet, Text, View, Dimensions, Platform } from "react-native";
 // import GetLocation from "react-native-get-location";
 
 const mapStyle = [
@@ -62,17 +62,6 @@ export default function Map() {
   // const onRegionChange = (region) => {
   //   setRegion(region);
   // };
-  var location = GetLocation.getCurrentPosition({
-    enableHighAccuracy: true,
-    timeout: 15000,
-  })
-    .then((location) => {
-      console.log(location);
-    })
-    .catch((error) => {
-      const { code, message } = error;
-      console.warn(code, message);
-    });
 
   const TelAviv = {
     title: "Tel-Aviv",
@@ -98,7 +87,6 @@ export default function Map() {
         </Marker> */}
         {/* <Polyline coordinates={[TelAviv, Holon]} /> */}
       </MapView>
-      <Text>{location}</Text>
     </View>
   );
 }

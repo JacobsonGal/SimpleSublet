@@ -26,7 +26,7 @@ export default function Main() {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, headerTransparent: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>
