@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: "dodgerblue",
   },
   searchBar: {
-    top: "20%",
+    top: 100,
     width: "90%",
     alignSelf: "center",
     borderRadius: 15,

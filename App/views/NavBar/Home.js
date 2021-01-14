@@ -1,8 +1,9 @@
 // rsf
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, Platform, SafeAreaView } from "react-native";
 import colors from "../../config/colors";
-import { BottomNavigation, Text } from "react-native-paper";
+import { BottomNavigation, IconButton, Text } from "react-native-paper";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import Map from "./Map";
 import Upload from "./Upload";
@@ -58,7 +59,7 @@ const UserRoute = () => (
       <Stack.Screen
         name="User"
         component={User}
-        options={{ headerBackTitleVisible: false, headerLeft: false }}
+        options={{ headerShown: false, headerLeft: false }}
       />
       {/* <Stack.Screen name="Settings" component={Settings} options={{}} /> */}
     </Stack.Navigator>
@@ -68,12 +69,38 @@ const UserRoute = () => (
 export default function Home({ navigation }) {
   const [index, setIndex] = React.useState(0);
 
+  let color = "white";
   const [routes] = React.useState([
-    { key: "map", title: "Map", icon: "map", color: "#00BFFF" },
-    { key: "dashboard", title: "Dashboard", icon: "home", color: "#FF6347" },
-    { key: "upload", title: "Upload", icon: "plus-circle", color: "#32CD32" },
-    { key: "chat", title: "Chat", icon: "send", color: "#3F51B5" },
-    { key: "user", title: "User", icon: "account-circle", color: "#009688" },
+    {
+      key: "map",
+      title: "מפה",
+      icon: () => <Icon name="map" size={25} color="white" />,
+      color: "#7FDBFF",
+    },
+    {
+      key: "dashboard",
+      title: "סאבלטים",
+      icon: () => <Icon name="home" size={25} color="white" />,
+      color: "#39CCCC",
+    },
+    {
+      key: "upload",
+      title: "העלה",
+      icon: () => <Icon name="plus-circle" size={25} color="white" />,
+      color: "#0074D9",
+    },
+    {
+      key: "chat",
+      title: "צ'אט",
+      icon: () => <Icon name="paper-plane" size={25} color="white" />,
+      color: "#3F51B5",
+    },
+    {
+      key: "user",
+      title: "פרופיל",
+      icon: () => <Icon name="user-circle" size={24} color="white" />,
+      color: "#001f3f",
+    },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
