@@ -24,8 +24,9 @@ export default class ContactsView extends Component {
       data: [
         {
           id: 1,
-          icon: "https://bootdey.com/img/Content/avatar/avatar1.png",
-          description: "User 1",
+          icon:
+            "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
+          description: "Gal Jacobson",
         },
         {
           id: 2,
@@ -80,12 +81,6 @@ export default class ContactsView extends Component {
       <View style={styles.container}>
         <View style={styles.formContent}>
           <View style={styles.inputContainer}>
-            <Image
-              style={[styles.icon, styles.inputIcon]}
-              source={{
-                uri: "https://png.icons8.com/search/androidL/100/000000",
-              }}
-            />
             <TextInput
               style={styles.inputs}
               ref={"txtPassword"}
@@ -138,6 +133,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     margin: 10,
+    marginTop: 0,
   },
   icon: {
     width: 30,
@@ -157,7 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   notificationList: {
-    marginTop: 20,
+    // marginTop: 20,
     padding: 10,
   },
   notificationBox: {

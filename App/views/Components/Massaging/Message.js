@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useCallback, useEffect, Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,18 +14,138 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
 } from "react-native";
+import { GiftedChat } from "react-native-gifted-chat";
+
+export function Example() {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: "This is a quick reply. Do you love Gifted Chat?",
+        createdAt: new Date(),
+        quickReplies: {
+          type: "checkbox", // or 'checkbox',
+          keepIt: true,
+          values: [
+            {
+              title: "😋 Yes",
+              value: "yes",
+            },
+            {
+              title: "📷 Yes, let me show you with a picture!",
+              value: "yes_picture",
+            },
+            // {
+            //   title: "😞 Nope. What?",
+            //   value: "no",
+            // },
+          ],
+        },
+        user: {
+          _id: 2,
+          name: "React Native",
+          avatar:
+            "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
+        },
+      },
+      {
+        _id: 2,
+        text: "This is a quick reply. Do you love Gifted Chat?",
+        createdAt: new Date(),
+        quickReplies: {
+          type: "checkbox", // or 'radio',
+          values: [
+            {
+              title: "Yes",
+              value: "yes",
+            },
+            {
+              title: "Yes, let me show you with a picture!",
+              value: "yes_picture",
+            },
+            {
+              title: "Nope. What?",
+              value: "no",
+            },
+          ],
+        },
+        user: {
+          _id: 1,
+          name: "Gal Jacobson",
+          avatar:
+            "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
+        },
+      },
+      {
+        // _id: 2,
+        // text: "My message",
+        // createdAt: new Date(Date.UTC(2016, 5, 11, 17, 20, 0)),
+        // user: {
+        //   _id: 2,
+        //   name: "React Native",
+        //   avatar:
+        //     "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
+        // },
+        // image: "https://facebook.github.io/react/img/logo_og.png",
+        // You can also add a video prop:
+        // video:
+        //   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        // Mark the message as sent, using one tick
+        sent: true,
+        // Mark the message as received, using two tick
+        received: true,
+        // Mark the message as pending with a clock loader
+        // pending: true,
+        // Any additional custom parameters are passed through
+      },
+    ]);
+  }, []);
+
+  const onSend = useCallback((messages = []) => {
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
+    );
+  }, []);
+
+  return (
+    <GiftedChat
+      messages={messages}
+      onSend={(messages) => onSend(messages)}
+      user={{
+        _id: 2,
+      }}
+    />
+  );
+}
 const { width, height } = Dimensions.get("window");
 export default class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
       msg: "",
+      users: [
+        {
+          id: 1,
+          description: "Gal Jacobson",
+          image:
+            "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
+        },
+        {
+          id: 2,
+          description: "Dan Mor",
+          image:
+            "https://media-exp1.licdn.com/dms/image/C4E03AQFGzKboo0ZmHA/profile-displayphoto-shrink_100_100/0/1572585145860?e=1616025600&v=beta&t=k1y8m7KDzmyOiKHEfvaQ0grHyDFAPSBlIGZtSiAnVbU",
+        },
+      ],
       messages: [
         {
           id: 1,
           sent: true,
-          msg: "Lorem ipsum dolor",
-          image: "https://www.bootdey.com/img/Content/avatar/avatar1.png",
+          msg: "היי אחי ! \n  אני שואל לגבי הדירה",
+          image:
+            "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
         },
         {
           id: 2,
@@ -84,7 +204,9 @@ export default class Chat extends Component {
       id: Math.floor(Math.random() * 99999999999999999 + 1),
       sent: false,
       msg: this.state.msg,
-      image: "https://www.bootdey.com/img/Content/avatar/avatar6.png",
+      image: this.state.image,
+      //   image:
+      //     "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
     });
     this.setState({ msg: "", messages: messages });
   }
@@ -96,7 +218,9 @@ export default class Chat extends Component {
         id: Math.floor(Math.random() * 99999999999999999 + 1),
         sent: true,
         msg: this.state.msg,
-        image: "https://www.bootdey.com/img/Content/avatar/avatar1.png",
+        image: this.state.image,
+        //   image:
+        //     "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
       });
       this.setState({ messages: messages });
       setTimeout(() => {
@@ -130,7 +254,8 @@ export default class Chat extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView behavior="padding" style={styles.keyboard}>
+        <Example />
+        {/* <KeyboardAvoidingView behavior="padding" style={styles.keyboard}>
           <FlatList
             style={styles.list}
             extraData={this.state}
@@ -153,6 +278,7 @@ export default class Chat extends Component {
             />
           </View>
         </KeyboardAvoidingView>
+       */}
       </SafeAreaView>
     );
   }
@@ -203,6 +329,7 @@ const styles = StyleSheet.create({
     shadowColor: "#3d3d3d",
     shadowRadius: 2,
     shadowOpacity: 0.5,
+    borderRadius: 15,
     shadowOffset: {
       height: 1,
     },

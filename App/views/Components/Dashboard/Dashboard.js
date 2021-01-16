@@ -15,7 +15,7 @@ import {
 import { FAB, Portal, Provider, theme, Searchbar } from "react-native-paper";
 import DropDownPicker from "react-native-dropdown-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Slider from "rn-range-slider";
+// import Slider from "rn-range-slider";
 
 // renderThumb = useCallback(() => <View />, []);
 // renderRail = useCallback(() => <View />, []);

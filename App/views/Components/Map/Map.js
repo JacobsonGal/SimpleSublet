@@ -8,8 +8,21 @@ import {
   Platform,
   TextInput,
   StatusBar,
+  Alert,
+  Modal,
+  TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import { FAB, Portal, Provider, theme, Searchbar } from "react-native-paper";
+import {
+  MenuProvider,
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from "react-native-popup-menu";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Filter from "./Filter";
 
 // import GetLocation from "react-native-get-location";
 
@@ -73,6 +86,8 @@ export default function Map() {
   //   setRegion(region);
   // };
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
@@ -96,6 +111,16 @@ export default function Map() {
 
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <Filter modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      </Modal>
       <MapView
         style={styles.map}
         showsUserLocation={true}
@@ -127,14 +152,16 @@ export default function Map() {
             style={styles.fab}
             fabStyle={styles.button}
             open={open}
-            icon={open ? "map" : "plus"}
+            icon={open ? "plus" : "map"}
             theme={theme}
             actions={[
               { icon: "plus", onPress: () => console.log("Pressed add") },
               {
-                icon: "star",
-                label: "המומלצים",
-                onPress: () => console.log("Pressed star"),
+                icon: "filter",
+                label: "סנן",
+                onPress: () => {
+                  setModalVisible(true);
+                },
               },
               {
                 icon: "heart",
@@ -143,7 +170,7 @@ export default function Map() {
                 small: false,
               },
               {
-                icon: "pin",
+                icon: "home",
                 label: "מיקום",
                 onPress: () => console.log("Pressed notifications"),
                 small: false,
@@ -186,5 +213,51 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     borderRadius: 15,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  contentColors: {
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  btnColor: {
+    height: 40,
+    width: 40,
+    borderRadius: 40,
+    marginHorizontal: 3,
   },
 });

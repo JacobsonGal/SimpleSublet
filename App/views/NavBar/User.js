@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserData } from "../../Redux/actions/userDataActions";
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      usersData: [],
       data: [
         {
           id: 1,
@@ -42,18 +45,46 @@ export default class Profile extends Component {
     };
   }
 
+  Airtable() {
+    dispatch = useDispatch();
+    this.state.usersData = useSelector((state) => state.airTableData.data);
+    useEffect(() => {
+      if (!usersData) {
+        dispatch(fetchUserData());
+      }
+    }, [remindersData, dispatch, fetchRemindersData, setLoading]);
+    // return this.state.usersData.findIndex(1).toString();
+    return "hello";
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Image
-            style={styles.avatar}
+            style={styles.header}
             source={{
               uri:
-                "http://test4.servernet.rs/assets/pages/media/profile/profile_user.jpg",
+                "https://scontent.ftlv6-1.fna.fbcdn.net/v/t1.0-9/34561813_10214643179140882_7248566277680136192_o.jpg?_nc_cat=100&ccb=2&_nc_sid=e3f864&_nc_ohc=n8edfUcQBOUAX_HaXtG&_nc_ht=scontent.ftlv6-1.fna&oh=0cdebfc3d981f2ff159f18874a1b8b92&oe=6028AC27",
             }}
           />
         </View>
+        <View>
+          <Text style={styles.name}>
+            <Text>{"Gal Jacobson"}</Text>
+          </Text>
+          <Text style={styles.phone}>
+            <Text>{"0523565689"}</Text>
+          </Text>
+        </View>
+        <Image
+          style={styles.photo}
+          source={{
+            uri:
+              "http://test4.servernet.rs/assets/pages/media/profile/profile_user.jpg",
+          }}
+        />
+
         <View style={styles.body}>
           <FlatList
             style={styles.bodyContent}
@@ -95,24 +126,23 @@ export default class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
-  // header: {
-  //   backgroundColor: "#EE82EE",
-  // },
-  // headerContent: {
-  //   padding: 30,
-  //   alignItems: "center",
-  // },
-  // avatar: {
-  //   width: 130,
-  //   height: 130,
-  //   borderRadius: 63,
-  //   borderWidth: 4,
-  //   borderColor: "#FF6347",
-  //   marginBottom: 10,
-  // },
+  container: {
+    backgroundColor: "#f5f7fb",
+  },
   header: {
     backgroundColor: "dodgerblue",
     height: 150,
+  },
+  photo: {
+    backgroundColor: "dodgerblue",
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginTop: -60,
+    // marginBottom: -20,
+    alignSelf: "center",
   },
   avatar: {
     width: 130,
@@ -123,6 +153,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: "center",
     marginTop: 80,
+    position: "absolute",
   },
   name: {
     fontSize: 22,
@@ -145,8 +176,9 @@ const styles = StyleSheet.create({
     height: 40,
   },
   body: {
-    height: "100%",
+    // height: "100%",
     justifyContent: "center",
+    marginTop: -50,
   },
   bodyContent: {
     // padding: 30,
@@ -176,10 +208,11 @@ const styles = StyleSheet.create({
   },
   /******** card **************/
   card: {
-    shadowColor: "black",
+    // shadowColor: "#e5eefa",
+    shadowColor: "#e5eefa",
     shadowOffset: {
-      width: 1,
-      height: 3,
+      width: 5,
+      height: 10,
     },
     shadowOpacity: 0.37,
     shadowRadius: 4,
@@ -206,61 +239,20 @@ const styles = StyleSheet.create({
   cardTitle: {
     color: "#00BFFF",
   },
+  name: {
+    marginTop: 30,
+    marginLeft: 30,
+    marginBottom: -50,
+    fontFamily: "Verdana",
+    fontSize: 15,
+    fontWeight: "500",
+  },
+  phone: {
+    marginTop: 33,
+    marginLeft: 290,
+    marginBottom: -50,
+    fontFamily: "Verdana",
+    fontSize: 15,
+    fontWeight: "500",
+  },
 });
-// const styles = StyleSheet.create({
-//   header: {
-//     backgroundColor: "#00BFFF",
-//     height: 200,
-//   },
-//   avatar: {
-//     width: 130,
-//     height: 130,
-//     borderRadius: 63,
-//     borderWidth: 4,
-//     borderColor: "white",
-//     marginBottom: 10,
-//     alignSelf: "center",
-//     position: "absolute",
-//     marginTop: 130,
-//   },
-//   name: {
-//     fontSize: 22,
-//     color: "black",
-//     fontWeight: "600",
-//   },
-//   body: {
-//     marginTop: 40,
-//   },
-//   bodyContent: {
-//     flex: 1,
-//     alignItems: "center",
-//     padding: 30,
-//   },
-//   name: {
-//     fontSize: 28,
-//     color: "#696969",
-//     fontWeight: "600",
-//   },
-//   info: {
-//     fontSize: 16,
-//     color: "#00BFFF",
-//     marginTop: 10,
-//   },
-//   description: {
-//     fontSize: 16,
-//     color: "#696969",
-//     marginTop: 10,
-//     textAlign: "center",
-//   },
-//   buttonContainer: {
-//     marginTop: 10,
-//     height: 45,
-//     flexDirection: "row",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     marginBottom: 20,
-//     width: 250,
-//     borderRadius: 30,
-//     backgroundColor: "#00BFFF",
-//   },
-// });

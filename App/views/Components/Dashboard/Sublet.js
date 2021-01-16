@@ -128,14 +128,14 @@ export default class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MapView style={styles.map}>
+        {/* <MapView style={styles.map}>
           <Marker
             title={this.location.title}
             description={this.location.description}
             coordinate={this.location}
             // image={{ uri: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg" }}
           />
-        </MapView>
+        </MapView> */}
         <View
           style={{
             flexDirection: "row",

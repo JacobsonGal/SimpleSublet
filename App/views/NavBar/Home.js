@@ -5,18 +5,15 @@ import colors from "../../config/colors";
 import { BottomNavigation, IconButton, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import Map from "./Map";
-import Upload from "./Upload";
-// import Dashboard from "./Dashboard";
-// import Chat from "./Chat";
 import User from "./User";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import Sublet from "../Components/Dashboard/Sublet";
 import Message from "../Components/Massaging/Message";
 import Chats from "../Components/Massaging/Chats";
+import Map from "../Components/Map/Map";
+import Upload from "./Upload";
 
 const Stack = createStackNavigator();
 
@@ -26,9 +23,20 @@ const MapRoute = () => {
   } else {
     return <Text>Map</Text>;
   }
+  // return <Text>Map</Text>;
 };
 
-const UploadRoute = () => <Text>Add</Text>;
+const UploadRoute = () => (
+  <NavigationContainer independent={true}>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="העלה סבלט חדש"
+        component={Upload}
+        options={{ headerBackTitleVisible: false, headerLeft: false }}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
 const DashboardRoute = () => (
   <NavigationContainer independent={true}>
     <Stack.Navigator>
@@ -106,7 +114,7 @@ export default function Home({ navigation }) {
   const renderScene = BottomNavigation.SceneMap({
     dashboard: DashboardRoute,
     map: MapRoute,
-    upload: Upload,
+    upload: UploadRoute,
     chat: ChatRoute,
     user: UserRoute,
   });

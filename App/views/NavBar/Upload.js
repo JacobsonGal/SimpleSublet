@@ -9,7 +9,11 @@ import {
   Dimensions,
   Alert,
   ScrollView,
+  Button,
 } from "react-native";
+import { TextInput } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import NativeForms from "native-forms";
 
 export default class ProductView extends Component {
   constructor(props) {
@@ -18,22 +22,26 @@ export default class ProductView extends Component {
       modalVisible: false,
       userSelected: [],
       product: {
-        name: "העלה סאבלט חדש",
+        name: "העלה תמונות של הנכס",
         description:
           "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
         created: "",
         images: [
-          "https://bootdey.com/img/Content/avatar/avatar6.png",
-          "https://bootdey.com/img/Content/avatar/avatar2.png",
-          "https://bootdey.com/img/Content/avatar/avatar3.png",
+          "https://icons-for-free.com/iconfiles/png/512/box+document+outline+share+top+upload+icon-1320195323221671611.png",
+          "https://icons-for-free.com/iconfiles/png/512/box+document+outline+share+top+upload+icon-1320195323221671611.png",
+          "https://icons-for-free.com/iconfiles/png/512/box+document+outline+share+top+upload+icon-1320195323221671611.png",
+          "https://icons-for-free.com/iconfiles/png/512/box+document+outline+share+top+upload+icon-1320195323221671611.png",
         ],
         colors: [
-          "#00BFFF",
-          "#FF1493",
-          "#00CED1",
-          "#228B22",
-          "#20B2AA",
-          "#FF4500",
+          // "#00BFFF",
+          // "#FF1493",
+          // "#00CED1",
+          // "#228B22",
+          // "#20B2AA",
+          // "#FF4500",
+          "home",
+          "office-building",
+          "google-classroom",
         ],
       },
     };
@@ -67,10 +75,14 @@ export default class ProductView extends Component {
       <View style={styles.contentColors}>
         {this.state.product.colors.map((prop, key) => {
           return (
-            <TouchableOpacity
-              key={key}
-              style={[styles.btnColor, { backgroundColor: prop }]}
-            ></TouchableOpacity>
+            <TouchableOpacity key={key} style={[styles.btnColor]}>
+              <Icon
+                name={prop}
+                size={30}
+                color={"black"}
+                style={styles.btnImage}
+              />
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -83,80 +95,11 @@ export default class ProductView extends Component {
       : this.state.product.images[0];
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.content}>
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.name}>{this.state.product.name}</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <View style={styles.header}>
-                <View style={styles.mainImageContainer}>
-                  <Image style={styles.mainImage} source={{ uri: mainImage }} />
-                </View>
-                {this.__renderImages()}
-              </View>
-            </View>
-          </View>
+        {/* <Text>NativeForms.com</Text>
 
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Colors</Text>
-            </View>
-            <View style={styles.cardContent}>{this.__renderColors()}</View>
-          </View>
+        <Button title="Show Form" color="#20f" /> */}
 
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Description</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.description}>
-                {this.state.product.description}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Description</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.description}>
-                {this.state.product.description}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Description</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.description}>
-                {this.state.product.description}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Description</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.description}>
-                {this.state.product.description}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.card}>
-            <View style={styles.cardContent}>
-              <TouchableOpacity
-                style={styles.shareButton}
-                onPress={() => this.clickEventListener()}
-              >
-                <Text style={styles.shareButtonText}>Add To Cart</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
+        <NativeForms form="https://my.nativeforms.com/QU2Bja10jZmMTWRdnWS1Db" />
       </View>
     );
   }
@@ -165,6 +108,8 @@ export default class ProductView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // marginTop: 20,
+    // direction: "rtl",
     backgroundColor: "#ebf0f7",
   },
   content: {
@@ -175,18 +120,30 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
   },
+  mainImageContainer: { justifyContent: "center" },
   mainImage: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
+    // backgroundColor: "#ddd",
+    borderWidth: 1,
+    padding: 50,
+    borderRadius: 5,
   },
   smallImagesContainer: {
-    flexDirection: "column",
-    marginLeft: 30,
+    flexDirection: "row",
+    // marginLeft: 30,
+    // marginBottom: 5,
+    alignSelf: "center",
+    // padding: 20,
   },
   smallImage: {
-    width: 60,
-    height: 60,
-    marginTop: 5,
+    width: 50,
+    height: 50,
+    margin: 2,
+    // marginTop: 8,
+    // backgroundColor: "#ddd",
+    borderWidth: 1,
+    borderRadius: 5,
   },
   btnColor: {
     height: 40,
@@ -194,7 +151,9 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     marginHorizontal: 3,
   },
+
   contentColors: {
+    justifyContent: "center",
     flexDirection: "row",
   },
   name: {
@@ -237,7 +196,8 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     elevation: 12,
     borderRadius: 30,
-
+    direction: "inherit",
+    justifyContent: "center",
     marginVertical: 5,
     backgroundColor: "white",
     marginHorizontal: 5,
@@ -245,17 +205,92 @@ const styles = StyleSheet.create({
   cardContent: {
     paddingVertical: 12.5,
     paddingHorizontal: 16,
+    justifyContent: "center",
   },
   cardHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     paddingTop: 12.5,
-    paddingBottom: 25,
+    paddingBottom: 5,
     paddingHorizontal: 16,
     borderBottomLeftRadius: 1,
     borderBottomRightRadius: 1,
+  },
+  cardInput: {
+    borderRadius: 30,
   },
   cardTitle: {
     color: "#00BFFF",
   },
 });
+
+// <ScrollView style={styles.content}>
+//   <View style={styles.card}>
+//     <View style={styles.cardHeader}>
+//       <Text style={styles.name}>{this.state.product.name}</Text>
+//     </View>
+//     <View style={styles.cardContent}>
+//       <View style={styles.mainImageContainer}>
+//         <View style={styles.header}>
+//           {/* <Image style={styles.mainImage} source={{ uri: mainImage }} /> */}
+//         </View>
+//         {this.__renderImages()}
+//       </View>
+//     </View>
+//   </View>
+
+//   <View style={styles.card}>
+//     <View style={styles.cardHeader}>
+//       <Text style={styles.cardTitle}>סוג הנכס</Text>
+//     </View>
+//     <View style={styles.cardContent}>{this.__renderColors()}</View>
+//   </View>
+
+//   <View style={styles.card}>
+//     <View style={styles.cardHeader}>
+//       <Text style={styles.cardTitle}>תיאור</Text>
+//     </View>
+//     <View style={styles.cardContent}>
+//       <TextInput
+//         style={styles.cardInput}
+//         // onChangeText={(text) => onChangeText(text)}
+//         // value={value}
+//       />
+//     </View>
+//   </View>
+//   <View style={styles.card}>
+//     <View style={styles.cardHeader}>
+//       <Text style={styles.cardTitle}>Description</Text>
+//     </View>
+//     <View style={styles.cardContent}>
+//       <Text style={styles.description}>{this.state.product.description}</Text>
+//     </View>
+//   </View>
+//   <View style={styles.card}>
+//     <View style={styles.cardHeader}>
+//       <Text style={styles.cardTitle}>Description</Text>
+//     </View>
+//     <View style={styles.cardContent}>
+//       <Text style={styles.description}>{this.state.product.description}</Text>
+//     </View>
+//   </View>
+//   <View style={styles.card}>
+//     <View style={styles.cardHeader}>
+//       <Text style={styles.cardTitle}>Description</Text>
+//     </View>
+//     <View style={styles.cardContent}>
+//       <Text style={styles.description}>{this.state.product.description}</Text>
+//     </View>
+//   </View>
+
+//   <View style={styles.card}>
+//     <View style={styles.cardContent}>
+//       <TouchableOpacity
+//         style={styles.shareButton}
+//         onPress={() => this.clickEventListener()}
+//       >
+//         <Text style={styles.shareButtonText}>Add To Cart</Text>
+//       </TouchableOpacity>
+//     </View>
+//   </View>
+// </ScrollView>;
