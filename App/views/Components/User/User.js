@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,14 +7,21 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData } from "../../Redux/actions/userDataActions";
+import { launchImageLibrary } from "react-native-image-picker";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchUser } from "../../../../Redux/actions/index";
+import firebase from "firebase";
+require("firebase/firestore");
+require("firebase/firebase-storage");
+var ImagePicker = require("react-native-image-picker");
 
-export default class Profile extends Component {
+export class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       usersData: [],
+      photo: null,
       data: [
         {
           id: 1,
@@ -44,20 +51,61 @@ export default class Profile extends Component {
       ],
     };
   }
-
-  Airtable() {
-    dispatch = useDispatch();
-    this.state.usersData = useSelector((state) => state.airTableData.data);
-    useEffect(() => {
-      if (!usersData) {
-        dispatch(fetchUserData());
-      }
-    }, [remindersData, dispatch, fetchRemindersData, setLoading]);
-    // return this.state.usersData.findIndex(1).toString();
-    return "hello";
+  componentDidMount() {
+    this.props.fetchUser();
   }
 
   render() {
+    const { currentUser } = this.props;
+    const childPath = `post/${
+      firebase.auth().currentUser.uid
+    }/${Math.random().toString(36)}`;
+
+    const pickImage = () => {
+      const option = { mediaType: "photo" };
+      launchImageLibrary(option, (response) => {
+        console.log("response", response);
+        if (response.uri) {
+          this.setState({ photo: response });
+        }
+      });
+
+      //Do A Popup
+
+      // ImagePicker.launchCamera(option, (response) => {
+      //   console.log("response", response);
+      //   if (response.uri) {
+      //     this.setState({ photo: response });
+      //   }
+      // });
+      uploadImage();
+    };
+    const uploadImage = async () => {
+      const uri = this.state.photo.uri;
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const task = firebase.storage.ref().child(childPath).put(blob);
+      const taskProgress = () => {
+        console.log(`transferred: ${task.snapshot.bytesTransferred}`);
+      };
+      const taskCompleted = () => {
+        task.snapshot.ref.getDownloadURL().then((snapshot) => {
+          console.log(snapshot);
+        });
+      };
+      const taskError = () => {
+        console.log(task.snapshot);
+      };
+      task.on("state_changed", taskProgress, taskError, taskCompleted);
+    };
+    console.log(currentUser);
+    if (currentUser == undefined) {
+      return (
+        <View>
+          <Text>undefined</Text>
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -71,19 +119,25 @@ export default class Profile extends Component {
         </View>
         <View>
           <Text style={styles.name}>
-            <Text>{"Gal Jacobson"}</Text>
+            <Text>{currentUser.name}</Text>
           </Text>
           <Text style={styles.phone}>
-            <Text>{"0523565689"}</Text>
+            <Text>{currentUser.email}</Text>
           </Text>
         </View>
-        <Image
-          style={styles.photo}
-          source={{
-            uri:
-              "http://test4.servernet.rs/assets/pages/media/profile/profile_user.jpg",
-          }}
-        />
+        {currentUser.picture ? (
+          <Image style={styles.photo} source={{ uri: currentUser.picture }} />
+        ) : (
+          <TouchableOpacity onPress={pickImage}>
+            <Image
+              style={styles.photo}
+              source={{
+                uri:
+                  "http://test4.servernet.rs/assets/pages/media/profile/profile_user.jpg",
+              }}
+            />
+          </TouchableOpacity>
+        )}
 
         <View style={styles.body}>
           <FlatList
@@ -104,7 +158,7 @@ export default class Profile extends Component {
                         uri: "https://img.icons8.com/customer/office/40",
                       }}
                     />
-                  </View> */}
+                  </View>   */}
                   <View style={styles.card}>
                     <View style={styles.cardHeader}>
                       <Image style={styles.icon} source={{ uri: item.image }} />
@@ -124,6 +178,13 @@ export default class Profile extends Component {
     );
   }
 }
+
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+});
+const mapDispatchProps = (dispatch) =>
+  bindActionCreators({ fetchUser }, dispatch);
+export default connect(mapStateToProps, mapDispatchProps)(Profile);
 
 const styles = StyleSheet.create({
   container: {

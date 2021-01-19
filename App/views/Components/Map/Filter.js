@@ -17,7 +17,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // import DatePicker from "react-native-datepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import RangeSlider from "rn-range-slider";
+// import RangeSlider from "rn-range-slider";
 import Slider from "@react-native-community/slider";
 
 export default function Filter({ modalVisible, setModalVisible }) {

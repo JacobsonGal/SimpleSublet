@@ -1,4 +1,0 @@
-export const FETCH_USER_DATA = "FETCH_USER_DATA";
-export const FETCH_SUBLET_DATA = "FETCH_SUBLET_DATA";
-export const FETCH_OWNER_DATA = "FETCH_OWNER_DATA";
-export const NEW_DATA = "NEW_DATA";

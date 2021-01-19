@@ -9,8 +9,8 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-import MapView, { Marker, Polyline } from "react-native-maps";
-import Carousel from "react-native-snap-carousel";
+// import MapView, { Marker, Polyline } from "react-native-maps";
+// import Carousel from "react-native-snap-carousel";
 
 export default class Profile extends Component {
   constructor(props) {

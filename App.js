@@ -1,42 +1,89 @@
 import React, { Component } from "react";
 import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import WelcomeScreen from "./App/views/WelcomeScreen";
 import Main from "./App/views/Main";
-import Login from "./App/views/Login";
-// import { Platform } from "react-native";
-// import { setCustomText } from "react-native-global-props";
-// const customTextProps = {
-//   style: {
-//     fontSize: 16,
-//     fontFamily: Platform.OS === "ios" ? "Cochin" : "HelveticaNeue",
-//     color: "black",
-//   },
-// };
-// setCustomText(customTextProps);
+import Login from "./App/views/Components/Authentication/Login";
+import Register from "./App/views/Components/Authentication/Register";
+import { View, Text } from "react-native";
+import * as firebase from "firebase";
 
-export default function App() {
-  return <Main />;
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./Redux/reducers";
+import thunk from "redux-thunk";
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+const Stack = createStackNavigator();
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDwMnPFWAqwD2fvqtS--0Zqf-nvet1jrNQ",
+  authDomain: "simsub-1.firebaseapp.com",
+  projectId: "simsub-1",
+  storageBucket: "simsub-1.appspot.com",
+  messagingSenderId: "65161035779",
+  appId: "1:65161035779:web:9eff179fbaea84da08ce36",
+  measurementId: "G-3HMN5XL9DG",
+};
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
 }
 
-// export default class App extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       component: <WelcomeScreen />,
-//     };
-//   }
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: false,
+    };
+  }
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        this.setState({ loggedIn: false, loaded: true });
+      } else {
+        this.setState({ loggedIn: true, loaded: true });
+      }
+    });
+  }
 
-//   componentDidMount() {
-//     setTimeout(() => {
-//       this.setState({ component: <Main /> });
-//     }, 5000);
-//   }
-
-//   componentWillUnmount() {
-//     clearTimeout(this.timeoutHandle);
-//   }
-//   render() {
-//     // return this.state.component;
-//     return <Main />;
-//   }
-// }
+  render() {
+    const { loggedIn, loaded } = this.state;
+    // if (!loaded) {
+    //   return (
+    //     <View style={{ flex: 1, justifyContent: "center" }}>
+    //       <Text>Loading</Text>
+    //     </View>
+    //   );
+    // }
+    if (!loggedIn) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Welcome"
+              component={WelcomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    }
+    return (
+      <Provider store={store}>
+        <Main />
+      </Provider>
+    );
+  }
+}

@@ -5,7 +5,7 @@ import colors from "../../config/colors";
 import { BottomNavigation, IconButton, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import User from "./User";
+import User from "../Components/User/User";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Dashboard from "../Components/Dashboard/Dashboard";
@@ -13,17 +13,17 @@ import Sublet from "../Components/Dashboard/Sublet";
 import Message from "../Components/Massaging/Message";
 import Chats from "../Components/Massaging/Chats";
 import Map from "../Components/Map/Map";
-import Upload from "./Upload";
+import Upload from "../Components/Upload/Upload";
 
 const Stack = createStackNavigator();
 
 const MapRoute = () => {
-  if (Platform.OS === "ios") {
-    return <Map />;
-  } else {
-    return <Text>Map</Text>;
-  }
-  // return <Text>Map</Text>;
+  // if (Platform.OS === "ios") {
+  //   return <Map />;
+  // } else {
+  //   return <Text>Map</Text>;
+  // }
+  return <Text>Map</Text>;
 };
 
 const UploadRoute = () => (
@@ -82,7 +82,9 @@ export default function Home({ navigation }) {
     {
       key: "map",
       title: "מפה",
-      icon: () => <Icon name="map" size={25} color="white" />,
+      icon: () => (
+        <Icon name="map" size={20} color="white" style={{ marginTop: "2px" }} />
+      ),
       color: "#7FDBFF",
     },
     {

@@ -99,7 +99,9 @@ export default class ContactsView extends Component {
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Message")}
+                onPress={() =>
+                  this.props.navigation.navigate("Message", { item })
+                }
               >
                 <View style={styles.notificationBox}>
                   <Image style={styles.image} source={{ uri: item.icon }} />
