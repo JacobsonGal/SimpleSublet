@@ -2,21 +2,20 @@ import React, { Component } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import WelcomeScreen from "./App/views/WelcomeScreen";
-import Main from "./App/views/Main";
-import Login from "./App/views/Components/Authentication/Login";
-import Register from "./App/views/Components/Authentication/Register";
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import * as firebase from "firebase";
-
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./Redux/reducers";
 import thunk from "redux-thunk";
+// ************************ Components ***********************//
+import WelcomeScreen from "./App/views/WelcomeScreen";
+import Main from "./App/views/Main";
+import Login from "./App/views/Components/Authentication/Login";
+import Register from "./App/views/Components/Authentication/Register";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 const Stack = createStackNavigator();
-
 const firebaseConfig = {
   apiKey: "AIzaSyDwMnPFWAqwD2fvqtS--0Zqf-nvet1jrNQ",
   authDomain: "simsub-1.firebaseapp.com",
@@ -26,16 +25,15 @@ const firebaseConfig = {
   appId: "1:65161035779:web:9eff179fbaea84da08ce36",
   measurementId: "G-3HMN5XL9DG",
 };
-
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
-
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
+      guest: false,
     };
   }
   componentDidMount() {
@@ -50,14 +48,15 @@ export default class App extends Component {
 
   render() {
     const { loggedIn, loaded } = this.state;
-    // if (!loaded) {
-    //   return (
-    //     <View style={{ flex: 1, justifyContent: "center" }}>
-    //       <Text>Loading</Text>
-    //     </View>
-    //   );
-    // }
-    if (!loggedIn) {
+    const { guest } = this.state;
+    if (!loaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+    if (!loggedIn && !guest) {
       return (
         <NavigationContainer>
           <Stack.Navigator>
@@ -74,6 +73,11 @@ export default class App extends Component {
             <Stack.Screen
               name="Register"
               component={Register}
+              options={{ headerBackTitleVisible: false }}
+            />
+            <Stack.Screen
+              name="Main"
+              component={Main}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

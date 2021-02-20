@@ -18,12 +18,12 @@ import Upload from "../Components/Upload/Upload";
 const Stack = createStackNavigator();
 
 const MapRoute = () => {
-  // if (Platform.OS === "ios") {
-  //   return <Map />;
-  // } else {
-  //   return <Text>Map</Text>;
-  // }
-  return <Text>Map</Text>;
+  if (Platform.OS === "ios") {
+    return <Map />;
+  } else {
+    return <Text>Map</Text>;
+  }
+  // return <Text>Map</Text>;
 };
 
 const UploadRoute = () => (
@@ -82,9 +82,7 @@ export default function Home({ navigation }) {
     {
       key: "map",
       title: "מפה",
-      icon: () => (
-        <Icon name="map" size={20} color="white" style={{ marginTop: "2px" }} />
-      ),
+      icon: () => <Icon name="map" size={20} color="white" />,
       color: "#7FDBFF",
     },
     {
