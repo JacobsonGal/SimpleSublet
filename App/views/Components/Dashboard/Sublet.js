@@ -9,7 +9,7 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-// import MapView, { Marker, Polyline } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import Carousel from "react-native-snap-carousel";
 
 export default class Profile extends Component {
@@ -128,19 +128,11 @@ export default class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <MapView style={styles.map}>
-          <Marker
-            title={this.location.title}
-            description={this.location.description}
-            coordinate={this.location}
-            // image={{ uri: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg" }}
-          />
-        </MapView> */}
         <View
           style={{
             flexDirection: "row",
             justifyContent: "center",
-            marginTop: 10,
+            marginBottom: 10,
           }}
         >
           <Carousel
@@ -156,8 +148,16 @@ export default class Profile extends Component {
             autoplayInterval={2000}
           />
         </View>
-
         <View style={styles.body}>
+          <MapView style={styles.mapCard}>
+            <Marker
+              title={this.location.title}
+              description={this.location.description}
+              coordinate={this.location}
+              // image={{ uri: "https://img.mako.co.il/2015/07/02/GGkldd14_x5.jpg" }}
+            />
+          </MapView>
+
           <FlatList
             style={styles.bodyContent}
             enableEmptySections={true}
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   bodyContent: {
     // padding: 30,
     // marginTop: 50,
-    position: "relative",
+    // position: "relative",
     paddingTop: 10,
   },
 
@@ -262,6 +262,44 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   /******** card **************/
+  card: {
+    borderWidth: 1,
+    borderColor: "#DCD9D952",
+    shadowColor:
+      "rgba(210.75000000000003, 210.75000000000003, 210.75000000000003, 0.5)",
+    shadowOffset: {
+      width: 1,
+      height: 3,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 4,
+    elevation: 12,
+    borderRadius: 30,
+
+    marginVertical: 5,
+    backgroundColor: "white",
+    marginHorizontal: 13,
+  },
+  mapCard: {
+    borderWidth: 1,
+    borderColor: "#DCD9D952",
+    shadowColor:
+      "rgba(210.75000000000003, 210.75000000000003, 210.75000000000003, 0.5)",
+    shadowOffset: {
+      width: 1,
+      height: 3,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 4,
+    elevation: 12,
+    borderRadius: 30,
+
+    marginVertical: 5,
+    backgroundColor: "white",
+    marginHorizontal: 13,
+    // width:50,
+    height: 150,
+  },
   card: {
     borderWidth: 1,
     borderColor: "#DCD9D952",

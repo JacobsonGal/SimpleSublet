@@ -30,7 +30,7 @@ export class Main extends Component {
             name="Home"
             options={{ headerShown: false, headerTransparent: true }}
           >
-            {(props) => <Home currentUser={currentUser} />}
+            {(props) => <Home {...props} currentUser={currentUser} />}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>

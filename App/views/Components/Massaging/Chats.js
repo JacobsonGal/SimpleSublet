@@ -37,6 +37,8 @@ export default class ContactsView extends Component {
   };
 
   render() {
+    const { currentUser } = this.props;
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <View style={styles.formContent}>
@@ -52,7 +54,7 @@ export default class ContactsView extends Component {
         </View>
         <FlatList
           style={styles.notificationList}
-          data={this.state.data}
+          data={currentUser.massangers}
           keyExtractor={(item) => {
             return item.id;
           }}
@@ -64,8 +66,8 @@ export default class ContactsView extends Component {
                 }
               >
                 <View style={styles.notificationBox}>
-                  <Image style={styles.image} source={{ uri: item.icon }} />
-                  <Text style={styles.name}>{item.description}</Text>
+                  <Image style={styles.image} source={{ uri: item.photoURI }} />
+                  <Text style={styles.name}>{item.name}</Text>
                 </View>
               </TouchableOpacity>
             );

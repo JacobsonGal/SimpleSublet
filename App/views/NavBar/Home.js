@@ -64,7 +64,7 @@ export default function Home({ currentUser }) {
           name="Chats"
           options={{ headerBackTitleVisible: false, headerLeft: false }}
         >
-          {(props) => <Chats currentUser={currentUser} />}
+          {(props) => <Chats {...props} currentUser={currentUser} />}
         </Stack.Screen>
         <Stack.Screen name="Message" component={Message} options={{}} />
       </Stack.Navigator>
