@@ -38,7 +38,7 @@ export default class ContactsView extends Component {
 
   render() {
     const { currentUser } = this.props;
-    console.log(this.props);
+
     return (
       <View style={styles.container}>
         <View style={styles.formContent}>

@@ -375,10 +375,25 @@ const styles = StyleSheet.create({
   },
   /******** card **************/
   card: {
-    margin: 0,
-    borderRadius: 2,
+    // margin: 0,
+    // borderRadius: 2,
+    // borderWidth: 1,
+    // borderColor: "#DCDCDC",
     borderWidth: 1,
-    borderColor: "#DCDCDC",
+    borderColor: "#DCD9D952",
+    shadowColor:
+      "rgba(210.75000000000003, 210.75000000000003, 210.75000000000003, 0.5)",
+    shadowOffset: {
+      width: 1,
+      height: 3,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 4,
+    elevation: 12,
+    borderRadius: 30,
+    marginVertical: 5,
+    backgroundColor: "white",
+    marginHorizontal: 13,
   },
   cardHeader: {
     paddingVertical: 17,
@@ -416,6 +431,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     height: 150,
     width: null,
+    borderRadius: 30,
   },
   /******** card components **************/
   title: {
