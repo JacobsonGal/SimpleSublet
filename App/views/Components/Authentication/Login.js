@@ -34,6 +34,7 @@ export default class Register extends Component {
       })
       .catch((error) => {
         console.log(error);
+        alert(error);
       });
 
     // this.props.navigation.navigate("Home");
@@ -68,7 +69,9 @@ export default class Register extends Component {
               />
             </View>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Main")}
+            >
               <Text style={styles.forgot}>Forgot Password?</Text>
             </TouchableOpacity>
             <TouchableOpacity

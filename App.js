@@ -58,30 +58,32 @@ export default class App extends Component {
     }
     if (!loggedIn && !guest) {
       return (
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Welcome"
-              component={WelcomeScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ headerBackTitleVisible: false }}
-            />
-            <Stack.Screen
-              name="Main"
-              component={Main}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <Provider store={store}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Welcome"
+                component={WelcomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ headerBackTitleVisible: false }}
+              />
+              <Stack.Screen
+                name="Main"
+                component={Main}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Provider>
       );
     }
     return (

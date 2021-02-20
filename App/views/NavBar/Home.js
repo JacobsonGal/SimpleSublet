@@ -5,6 +5,13 @@ import colors from "../../config/colors";
 import { BottomNavigation, IconButton, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchUser } from "../../../Redux/actions/index";
+import firebase from "firebase";
+require("firebase/firestore");
+require("firebase/firebase-storage");
+
 import User from "../Components/User/User";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -17,67 +24,66 @@ import Upload from "../Components/Upload/Upload";
 
 const Stack = createStackNavigator();
 
-const MapRoute = () => {
-  if (Platform.OS === "ios") {
-    return <Map />;
-  } else {
-    return <Text>Map</Text>;
-  }
-  // return <Text>Map</Text>;
-};
-
-const UploadRoute = () => (
-  <NavigationContainer independent={true}>
-    <Stack.Navigator>
-      <Stack.Screen
-        name="העלה סבלט חדש"
-        component={Upload}
-        options={{ headerBackTitleVisible: false, headerLeft: false }}
-      />
-    </Stack.Navigator>
-  </NavigationContainer>
-);
-const DashboardRoute = () => (
-  <NavigationContainer independent={true}>
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Dashboard"
-        component={Dashboard}
-        options={{ headerBackTitleVisible: false, headerLeft: false }}
-      />
-      <Stack.Screen name="Sublet" component={Sublet} options={{}} />
-    </Stack.Navigator>
-  </NavigationContainer>
-);
-const ChatRoute = () => (
-  <NavigationContainer independent={true}>
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Chats"
-        component={Chats}
-        options={{ headerBackTitleVisible: false, headerLeft: false }}
-      />
-      <Stack.Screen name="Message" component={Message} options={{}} />
-    </Stack.Navigator>
-  </NavigationContainer>
-);
-const UserRoute = () => (
-  <NavigationContainer independent={true}>
-    <Stack.Navigator>
-      <Stack.Screen
-        name="User"
-        component={User}
-        options={{ headerShown: false, headerLeft: false }}
-      />
-      {/* <Stack.Screen name="Settings" component={Settings} options={{}} /> */}
-    </Stack.Navigator>
-  </NavigationContainer>
-);
-
-export default function Home({ navigation }) {
+export default function Home({ currentUser }) {
   const [index, setIndex] = React.useState(0);
+  const MapRoute = () => {
+    if (Platform.OS === "ios") {
+      return <Map />;
+    } else {
+      return <Text>Map</Text>;
+    }
+    // return <Text>Map</Text>;
+  };
+  const UploadRoute = () => (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="העלה סבלט חדש"
+          component={Upload}
+          options={{ headerBackTitleVisible: false, headerLeft: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+  const DashboardRoute = () => (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{ headerBackTitleVisible: false, headerLeft: false }}
+        />
+        <Stack.Screen name="Sublet" component={Sublet} options={{}} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+  const ChatRoute = () => (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Chats"
+          options={{ headerBackTitleVisible: false, headerLeft: false }}
+        >
+          {(props) => <Chats currentUser={currentUser} />}
+        </Stack.Screen>
+        <Stack.Screen name="Message" component={Message} options={{}} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+  const UserRoute = () => (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="User"
+          options={{ headerShown: false, headerLeft: false }}
+        >
+          {(props) => <User currentUser={currentUser} />}
+        </Stack.Screen>
+        {/* <Stack.Screen name="Settings" component={Settings} options={{}} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 
-  let color = "white";
   const [routes] = React.useState([
     {
       key: "map",
@@ -127,7 +133,6 @@ export default function Home({ navigation }) {
     />
   );
 }
-
 // rnss
 const styles = StyleSheet.create({
   background: {

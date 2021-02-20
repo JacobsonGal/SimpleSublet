@@ -201,7 +201,9 @@ const styles = StyleSheet.create({
   header: {
     height: 150,
   },
-
+  container: {
+    backgroundColor: "#F7F8FC",
+  },
   map: {
     height: 150,
     // borderRadius: 30,
@@ -261,7 +263,10 @@ const styles = StyleSheet.create({
   },
   /******** card **************/
   card: {
-    shadowColor: "black",
+    borderWidth: 1,
+    borderColor: "#DCD9D952",
+    shadowColor:
+      "rgba(210.75000000000003, 210.75000000000003, 210.75000000000003, 0.5)",
     shadowOffset: {
       width: 1,
       height: 3,

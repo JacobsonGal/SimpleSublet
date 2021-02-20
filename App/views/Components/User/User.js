@@ -16,11 +16,11 @@ require("firebase/firestore");
 require("firebase/firebase-storage");
 var ImagePicker = require("react-native-image-picker");
 
-export class Profile extends Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      usersData: [],
+      // usersData: [],
       photo: null,
       data: [
         {
@@ -50,9 +50,6 @@ export class Profile extends Component {
         },
       ],
     };
-  }
-  componentDidMount() {
-    this.props.fetchUser();
   }
 
   render() {
@@ -99,13 +96,17 @@ export class Profile extends Component {
       task.on("state_changed", taskProgress, taskError, taskCompleted);
     };
     console.log(currentUser);
-    if (currentUser == undefined) {
-      return (
-        <View>
-          <Text>undefined</Text>
-        </View>
-      );
-    }
+
+    // if (currentUser === undefined) {
+    //   return (
+    //     <View>
+    //       <Text>undefined</Text>
+    //     </View>
+    //   );
+    // }
+    const logout = () => {
+      firebase.auth().signOut();
+    };
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -119,14 +120,14 @@ export class Profile extends Component {
         </View>
         <View>
           <Text style={styles.name}>
-            <Text>{currentUser.name}</Text>
+            <Text>{currentUser ? currentUser.name : "name"}</Text>
           </Text>
           <Text style={styles.phone}>
-            <Text>{currentUser.email}</Text>
+            <Text>{currentUser ? currentUser.email : "email"}</Text>
           </Text>
         </View>
-        {currentUser.picture ? (
-          <Image style={styles.photo} source={{ uri: currentUser.picture }} />
+        {currentUser.photoURI ? (
+          <Image style={styles.photo} source={{ uri: currentUser.photoURI }} />
         ) : (
           <TouchableOpacity onPress={pickImage}>
             <Image
@@ -174,17 +175,17 @@ export class Profile extends Component {
             }}
           />
         </View>
+        <TouchableOpacity onPress={logout}>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.LogoutTitle}>LOGOUT</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
 }
-
-const mapStateToProps = (store) => ({
-  currentUser: store.userState.currentUser,
-});
-const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchUser }, dispatch);
-export default connect(mapStateToProps, mapDispatchProps)(Profile);
 
 const styles = StyleSheet.create({
   container: {
@@ -299,6 +300,12 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: "#00BFFF",
+  },
+  LogoutTitle: {
+    color: "#00BFFF",
+    justifyContent: "center",
+    textAlign: "center",
+    width: "100%",
   },
   name: {
     marginTop: 30,

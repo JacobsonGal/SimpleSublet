@@ -28,46 +28,6 @@ export default class ContactsView extends Component {
             "https://media-exp1.licdn.com/dms/image/C4D03AQF_1rnZ2Nimmg/profile-displayphoto-shrink_400_400/0/1605471826895?e=1616025600&v=beta&t=03wepwEpwMSiNHluI6Td0dxajAOUB1C3FaDOVtdKKsk",
           description: "Gal Jacobson",
         },
-        {
-          id: 2,
-          icon: "https://bootdey.com/img/Content/avatar/avatar2.png",
-          description: "User 2",
-        },
-        {
-          id: 3,
-          icon: "https://bootdey.com/img/Content/avatar/avatar3.png",
-          description: "User 3",
-        },
-        {
-          id: 4,
-          icon: "https://bootdey.com/img/Content/avatar/avatar4.png",
-          description: "User 4",
-        },
-        {
-          id: 5,
-          icon: "https://bootdey.com/img/Content/avatar/avatar5.png",
-          description: "User 5",
-        },
-        {
-          id: 6,
-          icon: "https://bootdey.com/img/Content/avatar/avatar6.png",
-          description: "User 6",
-        },
-        {
-          id: 7,
-          icon: "https://bootdey.com/img/Content/avatar/avatar1.png",
-          description: "User 7",
-        },
-        {
-          id: 8,
-          icon: "https://bootdey.com/img/Content/avatar/avatar2.png",
-          description: "User 8",
-        },
-        {
-          id: 9,
-          icon: "https://bootdey.com/img/Content/avatar/avatar3.png",
-          description: "User 9",
-        },
       ],
     };
   }
@@ -119,7 +79,7 @@ export default class ContactsView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EBEBEB",
+    backgroundColor: "#F7F8FC",
   },
   formContent: {
     flexDirection: "row",
